@@ -3,7 +3,7 @@ class Solution {
 
         int n = s.length();
 
-        for (int l = 1; l < n; l++) {
+        for (int l = 1; l <= n/2; l++) {
 
             if (n % l == 0) {
 
