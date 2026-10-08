@@ -1,24 +1,29 @@
+import java.util.Arrays;
+
 class Solution {
     public int majorityElement(int[] nums) {
-        int n = 1;
-        int i = 0;
-        
-        for(i = 0; i < nums.length; i++){
-            
-            for(int j = i+1; j< nums.length;j++){
-                
-                if(nums[i]== nums[j]){
-                    n++;
-                }
-            }
-                if(n>nums.length/2){
+
+        Arrays.sort(nums);
+
+        int freq = 1;
+
+        for (int i = 0; i < nums.length - 1; i++) {
+
+            if (nums[i] == nums[i + 1]) {
+                freq++;
+
+                if (freq > nums.length / 2) {
                     return nums[i];
                 }
-              n = 1;
-                
+            } else {
+                freq = 1;
             }
-            return 0;
-        } 
-        
-        
+        }
+
+        return nums[0];
     }
+}
+
+// Synced seamlessly with LeetHub Pro
+// Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+// Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
