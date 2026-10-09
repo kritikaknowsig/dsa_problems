@@ -1,3 +1,4 @@
+
 class Solution {
     public int minDays(int[] bloomDay, int m, int k) {
 
@@ -7,20 +8,41 @@ class Solution {
             return -1;
         }
 
-        int low = 1;
-        int high = 0;
+        int low = bloomDay[0];
+        int high = bloomDay[0];
 
-        for (int day : bloomDay) {
-            high = Math.max(high, day);
+        for (int i = 0; i < bloomDay.length; i++) {
+            if (bloomDay[i] < low) {
+                low = bloomDay[i];
+            }
+
+            if (bloomDay[i] > high) {
+                high = bloomDay[i];
+            }
         }
 
         int ans = -1;
 
         while (low <= high) {
-
             int mid = low + (high - low) / 2;
 
-            if (isPossible(bloomDay, mid, m, k)) {
+            int boq = 0;
+            int flr = 0;
+
+            for (int i = 0; i < bloomDay.length; i++) {
+                if (bloomDay[i] <= mid) {
+                    flr++;
+
+                    if (flr == k) {
+                        boq++;
+                        flr = 0;
+                    }
+                } else {
+                    flr = 0;
+                }
+            }
+
+            if (boq >= m) {
                 ans = mid;
                 high = mid - 1;
             } else {
@@ -30,29 +52,14 @@ class Solution {
 
         return ans;
     }
-
-    private boolean isPossible(int[] bloomDay, int day, int m, int k) {
-
-        int flowers = 0;
-        int bouquets = 0;
-
-        for (int i = 0; i < bloomDay.length; i++) {
-
-            if (bloomDay[i] <= day) {
-                flowers++;
-
-                if (flowers == k) {
-                    bouquets++;
-                    flowers = 0;
-                }
-            } else {
-                flowers = 0;
-            }
-        }
-
-        return bouquets >= m;
-    }
 }
+// Remember the order:
+// Check whether enough flowers exist.
+// Find the minimum and maximum bloom days.
+// Start binary search.
+// For each mid, count consecutive bloomed flowers and bouquets.
+// Update low or high.
+// Return ans.
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
